@@ -1,0 +1,21 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: api-produto-mysql
+    environment:
+      MYSQL_DATABASE: api_produto
+      MYSQL_USER: apiproduto
+      MYSQL_PASSWORD: apiproduto
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - api-produto-mysql-dados:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  api-produto-mysql-dados:

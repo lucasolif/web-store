@@ -1,0 +1,75 @@
+server:
+  port: ${PORTA_SERVIDOR:8080}
+
+spring:
+  application:
+    name: api-webStore
+  datasource:
+    url: ${BANCO_URL:jdbc:mysql://localhost:3306/ecommerce?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Sao_Paulo}
+    username: ${BANCO_USUARIO:root}
+    password: ${BANCO_SENHA:D8hj0ptr}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+  jackson:
+    default-property-inclusion: non_null
+  servlet:
+    multipart:
+      max-file-size: ${PRODUCT_IMAGE_MAX_SIZE:5MB}
+      max-request-size: ${PRODUCT_IMAGE_MAX_REQUEST_SIZE:6MB}
+
+app:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:null}
+    allowed-origin-patterns: ${CORS_ALLOWED_ORIGIN_PATTERNS:http://localhost:*,http://127.0.0.1:*}
+
+integrations:
+  products:
+    base-url: ${PRODUCT_API_BASE_URL:http://localhost:8081}
+    connect-timeout: ${PRODUCT_API_CONNECT_TIMEOUT:10s}
+    read-timeout: ${PRODUCT_API_READ_TIMEOUT:10s}
+    routes:
+      products: /api/products
+      product-by-id: /api/products/{id}
+      product-image: /api/product-images/{fileName}
+      stock-movement: /api/products/{id}/stock-movements
+
+  cep:
+    base-url: ${CEP_API_BASE_URL:http://localhost:8082}
+    connect-timeout: ${CEP_API_CONNECT_TIMEOUT:10s}
+    read-timeout: ${CEP_API_READ_TIMEOUT:10s}
+    routes:
+      cep: /api/cep/{cep}
+
+  payment:
+    base-url: ${PAYMENT_API_BASE_URL:http://localhost:8083}
+    connect-timeout: ${PAYMENT_API_CONNECT_TIMEOUT:10s}
+    read-timeout: ${PAYMENT_API_READ_TIMEOUT:10s}
+    routes:
+      pix: /api/payment/pix
+      card: /api/payment/card
+      bank-slip: /api/payment/bankslip
+
+  email:
+    base-url: ${EMAIL_API_BASE_URL:http://localhost:8084}
+    connect-timeout: ${EMAIL_API_CONNECT_TIMEOUT:10s}
+    read-timeout: ${EMAIL_API_READ_TIMEOUT:10s}
+    routes:
+      send: /api/emails
+
+  nf:
+    base-url: ${INVOICE_API_BASE_URL:http://localhost:8085}
+    connect-timeout: ${INVOICE_API_CONNECT_TIMEOUT:10s}
+    read-timeout: ${INVOICE_API_READ_TIMEOUT:10s}
+    routes:
+      create: /api/invoice
+      by-id: /api/invoice/{id}
+
+  delivery:
+    base-url: ${DELIVERY_API_BASE_URL:http://localhost:8086}
+    connect-timeout: ${DELIVERY_API_CONNECT_TIMEOUT:10s}
+    read-timeout: ${DELIVERY_API_READ_TIMEOUT:10s}
+    routes:
+      create: /api/deliveries

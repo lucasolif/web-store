@@ -1,0 +1,17 @@
+server:
+  port: ${PORTA_SERVIDOR:8082}
+
+spring:
+  application:
+    name: api-cep
+  http:
+    clients:
+      connect-timeout: 2s
+      read-timeout: 5s
+  jackson:
+    default-property-inclusion: non_null
+
+integracoes:
+  viacep:
+    base-url: ${VIACEP_BASE_URL:https://viacep.com.br}
+
